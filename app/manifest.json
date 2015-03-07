@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Hangouts GitHub Emojifier",
+    "name": "GitHub Emojifier for Hangouts Emoji",
     "description": "Converts Emoji on GitHub to Google-style Emoji",
     "version": "0.1.0",
     "icons": {
