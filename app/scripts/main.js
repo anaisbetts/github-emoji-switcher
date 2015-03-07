@@ -1,52 +1,52 @@
 (function() {
-	var fixUpAllEmojis = function(rootElement) {
-		var emojis = document.querySelectorAll('.emoji');
-		var i;
+  var fixUpAllEmojis = function(rootElement) {
+    var emojis = document.querySelectorAll('.emoji');
+    var i;
 
-		for (i=0; i < emojis.length; i++) {
-			emojis[i].src = emojis[i].src
-				.replace('https://assets-cdn.github.com/images/icons/emoji/unicode/', 'https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-64/');
+    for (i=0; i < emojis.length; i++) {
+      emojis[i].src = emojis[i].src
+        .replace('https://assets-cdn.github.com/images/icons/emoji/unicode/', 'https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-64/');
 
-		}
+    }
 
-		var emojiIcons = document.querySelectorAll('.emoji-icon');
+    var emojiIcons = document.querySelectorAll('.emoji-icon');
 
-		for (i=0; i < emojiIcons.length; i++) {
-			emojiIcons[i].style.backgroundImage = emojiIcons[i].style.backgroundImage
-				.replace('https://assets-cdn.github.com/images/icons/emoji/unicode/', 'https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-64/');
-		}
-	};
+    for (i=0; i < emojiIcons.length; i++) {
+      emojiIcons[i].style.backgroundImage = emojiIcons[i].style.backgroundImage
+        .replace('https://assets-cdn.github.com/images/icons/emoji/unicode/', 'https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-64/');
+    }
+  };
 
-	var obs = new MutationObserver(function(records) {
-		for (var i=0; i < records.length; i++) {
-			var nodes = (records[i].addedNodes && records[i].addedNodes.length > 0 ?
-				records[i].addedNodes : [records[i].target]);
+  var obs = new MutationObserver(function(records) {
+    for (var i=0; i < records.length; i++) {
+      var nodes = (records[i].addedNodes && records[i].addedNodes.length > 0 ?
+        records[i].addedNodes : [records[i].target]);
 
-				for (var j=0; j < nodes.length; j++) {
-					fixUpAllEmojis(nodes[j]);
-				}
-		}
-	});
+        for (var j=0; j < nodes.length; j++) {
+          fixUpAllEmojis(nodes[j]);
+        }
+    }
+  });
 
-	var allPjaxes = document.querySelectorAll('div[data-pjax-container]');
-	for (var i=0; i < allPjaxes.length; i++) {
-		obs.observe(allPjaxes[i], {childList: true});
-	}
+  var allPjaxes = document.querySelectorAll('div[data-pjax-container]');
+  for (var i=0; i < allPjaxes.length; i++) {
+    obs.observe(allPjaxes[i], {childList: true});
+  }
 
-	var sugg = document.querySelector('.suggester');
-	if (sugg) {
-		var suggObs = new MutationObserver(function(records) {
-			var es = sugg.querySelector('.emoji-suggestions');
-			if (es) obs.observe(es, {childList: true});
-		});
+  var sugg = document.querySelector('.suggester');
+  if (sugg) {
+    var suggObs = new MutationObserver(function(records) {
+      var es = sugg.querySelector('.emoji-suggestions');
+      if (es) obs.observe(es, {childList: true});
+    });
 
-		suggObs.observe(sugg, {childList: true});
-	}
+    suggObs.observe(sugg, {childList: true});
+  }
 
-	var preview = document.querySelector('.markdown-body');
-	if (preview) {
-		obs.observe(preview, {childList: true});
-	}
+  var preview = document.querySelector('.markdown-body');
+  if (preview) {
+    obs.observe(preview, {childList: true});
+  }
 
-	fixUpAllEmojis(document);
+  fixUpAllEmojis(document);
 })();
