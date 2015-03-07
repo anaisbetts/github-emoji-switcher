@@ -33,14 +33,16 @@
     obs.observe(allPjaxes[i], {childList: true});
   }
 
-  var sugg = document.querySelector('.suggester');
-  if (sugg) {
-    var suggObs = new MutationObserver(function(records) {
-      var es = sugg.querySelector('.emoji-suggestions');
+  var suggesters = document.querySelectorAll('.suggester');
+  var suggObs = new MutationObserver(function(records) {
+    for (var j=0; j < records.length; j++) {
+      var es = records[j].target.querySelector('.emoji-suggestions');
       if (es) obs.observe(es, {childList: true});
-    });
+    }
+  });
 
-    suggObs.observe(sugg, {childList: true});
+  for (i=0; i < suggesters.length; i++) {
+    suggObs.observe(suggesters[i], {childList: true});
   }
 
   var preview = document.querySelector('.markdown-body');
