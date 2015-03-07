@@ -6,7 +6,6 @@
     for (i=0; i < emojis.length; i++) {
       emojis[i].src = emojis[i].src
         .replace('https://assets-cdn.github.com/images/icons/emoji/unicode/', 'https://raw.githubusercontent.com/iamcal/emoji-data/master/img-google-64/');
-
     }
 
     var emojiIcons = document.querySelectorAll('.emoji-icon');
