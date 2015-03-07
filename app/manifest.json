@@ -1,5 +1,5 @@
 {
-    "manifest_version": 1,
+    "manifest_version": 2,
     "name": "Hangouts GitHub Emojifier",
     "description": "Converts Emoji on GitHub to Google-style Emoji",
     "version": "0.1.0",

@@ -36,7 +36,7 @@ module.exports = {
 			expand: true,
 			cwd: 'app/scripts/',
 			src: ['*.js'],
-			dest: 'build/js'
+			dest: 'build/scripts'
     }]
 	}
 };

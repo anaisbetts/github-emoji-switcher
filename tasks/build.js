@@ -70,9 +70,8 @@ module.exports = function (grunt) {
 		grunt.file.write(options.manifest, JSON.stringify(manifest, undefined, 4));
 		done();
 	});
-	
+
 	grunt.registerTask('build', [
-		'updatePackage',
 		'clean:build',
 		'uglify:build',
 		'less:build',
