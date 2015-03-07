@@ -16,7 +16,29 @@
     }
   };
 
-  var obs = new MutationObserver(function(records) {
+  var obs = null;
+  var hookedSuggesters = {};
+
+  var hookSuggesters = function() {
+    var suggObs = new MutationObserver(function(records) {
+      for (var j=0; j < records.length; j++) {
+        var es = records[j].target.querySelector('.emoji-suggestions');
+        if (es) obs.observe(es, {childList: true});
+      }
+    });
+
+    var suggesters = document.querySelectorAll('.suggester');
+    for (i=0; i < suggesters.length; i++) {
+      if (hookedSuggesters[suggesters[i]]) continue;
+
+      suggObs.observe(suggesters[i], {childList: true});
+      hookedSuggesters[suggesters[i]] = true;
+    }
+  };
+
+  obs = new MutationObserver(function(records) {
+    hookSuggesters();
+
     for (var i=0; i < records.length; i++) {
       var nodes = (records[i].addedNodes && records[i].addedNodes.length > 0 ?
         records[i].addedNodes : [records[i].target]);
@@ -32,22 +54,12 @@
     obs.observe(allPjaxes[i], {childList: true});
   }
 
-  var suggesters = document.querySelectorAll('.suggester');
-  var suggObs = new MutationObserver(function(records) {
-    for (var j=0; j < records.length; j++) {
-      var es = records[j].target.querySelector('.emoji-suggestions');
-      if (es) obs.observe(es, {childList: true});
-    }
-  });
-
-  for (i=0; i < suggesters.length; i++) {
-    suggObs.observe(suggesters[i], {childList: true});
-  }
-
   var preview = document.querySelector('.markdown-body');
   if (preview) {
     obs.observe(preview, {childList: true});
   }
+
+  hookSuggesters();
 
   fixUpAllEmojis(document);
 })();
